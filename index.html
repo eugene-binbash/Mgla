@@ -52,19 +52,37 @@
       overflow-y: auto;
     }
 
+    /* Кликабельный бренд */
+    .brand-link {
+      display: block;
+      text-decoration: none;
+      margin-bottom: 4px;
+      border-radius: 10px;
+      outline-offset: 4px;
+    }
+
+    .brand-link:hover .brand {
+      filter: brightness(1.15);
+    }
+
     .brand {
       font-size: 22px;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 4px;
       background: linear-gradient(180deg, #ffffff, #9fb6dd);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      transition: filter 0.2s;
+    }
+
+    .brand-link:hover .brand-sub {
+      color: #9fb6dd;
     }
 
     .brand-sub {
+      display: block;
       font-size: 11px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -72,6 +90,7 @@
       margin-bottom: 24px;
       padding-bottom: 20px;
       border-bottom: 1px solid rgba(160, 190, 255, 0.12);
+      transition: color 0.2s;
     }
 
     .nav-link {
@@ -175,7 +194,8 @@
         overflow-y: visible;
       }
 
-      .brand { margin: 0 12px 0 0; font-size: 18px; }
+      .brand-link { margin: 0 12px 0 0; }
+      .brand { font-size: 18px; }
       .brand-sub { display: none; }
 
       .nav-link { padding: 8px 12px; font-size: 14px; }
@@ -205,8 +225,10 @@
 
   <!-- ===== Левое меню ===== -->
   <aside class="sidebar">
-    <div class="brand">Мгла</div>
-    <div class="brand-sub">RP-сервер Zomboid</div>
+    <a href="index.html" class="brand-link">
+      <span class="brand">Мгла</span>
+      <span class="brand-sub">RP-сервер Zomboid</span>
+    </a>
 
     <a href="index.html"  class="nav-link active">Главная</a>
     <a href="lor.html"    class="nav-link">Лор</a>
