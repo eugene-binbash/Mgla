@@ -87,10 +87,45 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #6f7f99;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(160, 190, 255, 0.12);
+      margin-bottom: 6px;
       transition: color 0.2s;
+    }
+
+    /* ===== IP-адрес ===== */
+    .server-ip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      margin: 0 0 22px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      background: rgba(140, 170, 255, 0.07);
+      border: 1px solid rgba(160, 190, 255, 0.22);
+      color: #dbe6f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      user-select: all;
+    }
+
+    .server-ip:hover {
+      background: rgba(140, 170, 255, 0.16);
+      border-color: rgba(180, 205, 255, 0.45);
+    }
+
+    .server-ip .ip-icon {
+      font-size: 12px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    .server-ip.copied {
+      background: rgba(120, 220, 160, 0.14);
+      border-color: rgba(120, 220, 160, 0.5);
+      color: #c8f5db;
     }
 
     .nav-link {
@@ -198,6 +233,13 @@
       .brand { font-size: 18px; }
       .brand-sub { display: none; }
 
+      .server-ip {
+        margin: 0;
+        order: 10;
+        flex-basis: 100%;
+        justify-content: center;
+      }
+
       .nav-link { padding: 8px 12px; font-size: 14px; }
 
       .nav-divider {
@@ -229,6 +271,12 @@
       <span class="brand">Мгла</span>
       <span class="brand-sub">RP-сервер Zomboid</span>
     </a>
+
+    <!-- IP-адрес: клик — копирование -->
+    <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
+      <span class="ip-icon">📋</span>
+      <span class="ip-text">31.25.243.174:8542</span>
+    </button>
 
     <a href="index.html"  class="nav-link active">Главная</a>
     <a href="lor.html"    class="nav-link">Лор</a>
@@ -268,5 +316,55 @@
       </p>
     </div>
   </main>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('serverIp');
+      const ip = '31.25.243.174:8542';
+      const textEl = btn.querySelector('.ip-text');
+      const iconEl = btn.querySelector('.ip-icon');
+      let timer = null;
+
+      async function copyIp() {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(ip);
+          } else {
+            // Запасной путь для http/старых браузеров
+            const ta = document.createElement('textarea');
+            ta.value = ip;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showCopied();
+        } catch (e) {
+          // Если копирование не удалось — хотя бы выделим текст
+          const range = document.createRange();
+          range.selectNodeContents(textEl);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+
+      function showCopied() {
+        btn.classList.add('copied');
+        iconEl.textContent = '✓';
+        textEl.textContent = 'Скопировано';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          iconEl.textContent = '📋';
+          textEl.textContent = ip;
+        }, 1600);
+      }
+
+      btn.addEventListener('click', copyIp);
+    })();
+  </script>
 </body>
 </html>
