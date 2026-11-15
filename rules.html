@@ -52,26 +52,71 @@
       overflow-y: auto;
     }
 
+    .brand-link {
+      display: block;
+      text-decoration: none;
+      margin-bottom: 4px;
+      border-radius: 10px;
+      outline-offset: 4px;
+    }
+
+    .brand-link:hover .brand { filter: brightness(1.15); }
+
     .brand {
       font-size: 22px;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 4px;
       background: linear-gradient(180deg, #ffffff, #9fb6dd);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      transition: filter 0.2s;
     }
 
+    .brand-link:hover .brand-sub { color: #9fb6dd; }
+
     .brand-sub {
+      display: block;
       font-size: 11px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #6f7f99;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(160, 190, 255, 0.12);
+      margin-bottom: 6px;
+      transition: color 0.2s;
+    }
+
+    /* ===== IP-адрес ===== */
+    .server-ip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      margin: 0 0 22px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      background: rgba(140, 170, 255, 0.07);
+      border: 1px solid rgba(160, 190, 255, 0.22);
+      color: #dbe6f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      user-select: all;
+    }
+
+    .server-ip:hover {
+      background: rgba(140, 170, 255, 0.16);
+      border-color: rgba(180, 205, 255, 0.45);
+    }
+
+    .server-ip .ip-icon { font-size: 12px; opacity: 0.8; flex-shrink: 0; }
+
+    .server-ip.copied {
+      background: rgba(120, 220, 160, 0.14);
+      border-color: rgba(120, 220, 160, 0.5);
+      color: #c8f5db;
     }
 
     .nav-link {
@@ -85,29 +130,17 @@
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
 
-    .nav-link:hover {
-      background: rgba(140, 170, 255, 0.1);
-      color: #e8eef7;
-    }
+    .nav-link:hover { background: rgba(140, 170, 255, 0.1); color: #e8eef7; }
 
-    /* Активный пункт — «Правила» */
     .nav-link.active {
       background: rgba(140, 170, 255, 0.14);
       border-color: rgba(160, 190, 255, 0.25);
       color: #ffffff;
     }
 
-    .nav-divider {
-      height: 1px;
-      background: rgba(160, 190, 255, 0.12);
-      margin: 12px 0;
-    }
+    .nav-divider { height: 1px; background: rgba(160, 190, 255, 0.12); margin: 12px 0; }
 
-    .nav-link.external {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .nav-link.external { display: flex; align-items: center; gap: 10px; }
 
     .nav-link.external .icon {
       font-size: 15px;
@@ -150,40 +183,13 @@
     }
 
     /* ===== Типографика ===== */
-    h1 {
-      font-size: 30px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff, #9fb6dd);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #7f93b3;
-      margin-bottom: 26px;
-    }
-
-    .desc {
-      font-size: 15.5px;
-      line-height: 1.7;
-      color: #b8c6dc;
-      margin-bottom: 18px;
-    }
-
-    .desc:last-child { margin-bottom: 0; }
-
     h2 {
       font-size: 18px;
       font-weight: 600;
       color: #dbe6f8;
-      margin: 26px 0 12px;
+      margin: 30px 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(160, 190, 255, 0.14);
     }
 
     h2:first-of-type { margin-top: 0; }
@@ -210,7 +216,6 @@
       color: #7f93b3;
     }
 
-    /* Выделение важного */
     .note {
       margin-top: 28px;
       padding: 16px 18px;
@@ -220,6 +225,13 @@
       font-size: 14.5px;
       line-height: 1.6;
       color: #e6cdb5;
+    }
+
+    .appeal {
+      margin-top: 24px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #b8c6dc;
     }
 
     /* ===== Мобильная версия ===== */
@@ -239,16 +251,20 @@
         overflow-y: visible;
       }
 
-      .brand { margin: 0 12px 0 0; font-size: 18px; }
+      .brand-link { margin: 0 12px 0 0; }
+      .brand { font-size: 18px; }
       .brand-sub { display: none; }
+
+      .server-ip {
+        margin: 0;
+        order: 10;
+        flex-basis: 100%;
+        justify-content: center;
+      }
 
       .nav-link { padding: 8px 12px; font-size: 14px; }
 
-      .nav-divider {
-        width: 1px;
-        height: 24px;
-        margin: 0 4px;
-      }
+      .nav-divider { width: 1px; height: 24px; margin: 0 4px; }
 
       .main {
         margin-left: 0;
@@ -257,12 +273,7 @@
         min-height: auto;
       }
 
-      .content-window {
-        padding: 32px 22px;
-        min-height: auto;
-      }
-
-      h1 { font-size: 24px; }
+      .content-window { padding: 32px 22px; min-height: auto; }
     }
   </style>
 </head>
@@ -271,8 +282,15 @@
 
   <!-- ===== Левое меню ===== -->
   <aside class="sidebar">
-    <div class="brand">Мгла</div>
-    <div class="brand-sub">RP-сервер Zomboid</div>
+    <a href="index.html" class="brand-link">
+      <span class="brand">Мгла</span>
+      <span class="brand-sub">RP-сервер Zomboid</span>
+    </a>
+
+    <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
+      <span class="ip-icon">📋</span>
+      <span class="ip-text">31.25.243.174:8542</span>
+    </button>
 
     <a href="index.html"  class="nav-link">Главная</a>
     <a href="lor.html"    class="nav-link">Лор</a>
@@ -294,15 +312,12 @@
   <!-- ===== Правое окно ===== -->
   <main class="main">
     <div class="content-window">
-      <h1>Правила</h1>
-      <div class="subtitle">Что можно и что нельзя</div>
 
       <h2>Общее</h2>
       <ul>
-        <li>Уважайте других игроков: без оскорблений, травли, угроз и токсичности.</li>
-        <li>РП превыше всего — играйте роль, а не «мета-гейте» и не ломайте атмосферу.</li>
-        <li>Запрещены читы, макросы, стороннее ПО и любое вмешательство в клиент игры.</li>
-        <li>Не используйте баги и эксплойты — сообщите о них администрации.</li>
+        <li>Уважайте других игроков: не переходите на оскорбление человека, а не персонажа.</li>
+        <li>РП превыше всего — играйте роль, не ломайте атмосферу.</li>
+        <li>Запрещены читы, макросы, стороннее ПО и использование багов/дюпа.</li>
         <li>Не создавайте помех игре других: без спама, флуда и намеренного вредительства.</li>
         <li>Администрация вправе трактовать спорные ситуации по духу правил, а не по букве.</li>
       </ul>
@@ -310,9 +325,9 @@
       <h2>РП и персонаж</h2>
       <ul>
         <li>Ваш персонаж — часть мира «Мглы». Играйте его характер, страхи и цели.</li>
-        <li>Запрещён «мета-гейм»: нельзя использовать знания, которых нет у персонажа.</li>
-        <li>Запрещён «пауэр-гейм»: нельзя навязывать исход действий другому игроку без отыгрыша.</li>
-        <li>Смерть персонажа — часть РП. Не «воскрешайте» его без согласования с администрацией.</li>
+        <li>Запрещён «Meta Gaming»: нельзя использовать знания, которых нет у персонажа.</li>
+        <li>Запрещён «Power Gaming»: нельзя вести себя нереалистично, воображая из себя «супергероя», неуязвимого персонажа или человека, который не боится за свою жизнь.</li>
+        <li>Смерть: вы просыпаетесь в больнице и не помните последние 15 минут своей жизни.</li>
       </ul>
 
       <h2>PvP</h2>
@@ -320,36 +335,67 @@
         <li>PvP разрешён, но только в рамках РП и с отыгрышем.</li>
         <li>Без причины убивать нельзя — нужен повод, контекст и хотя бы минимальная сцена.</li>
         <li>Запрещён «спавн-килл» и убийство новичков без отыгрыша.</li>
-        <li>Запрещено добивать раненого без причины и отыгрыша.</li>
       </ul>
 
-      <h2>Радиация и метель</h2>
-      <ul>
-        <li>Не выходите в радиационные зоны без защиты — это ваша ответственность.</li>
-        <li>Укрытия от метели не «неуязвимы»: их можно потерять в РП.</li>
-        <li>Запрещено намеренно заманивать других игроков в радиационные зоны без отыгрыша.</li>
-      </ul>
-
-      <h2>Экономика и торговля</h2>
-      <ul>
-        <li>Торговля и бартер — часть РП. Обман в сделке допустим только в рамках отыгрыша.</li>
-        <li>Запрещены «дубли» предметов и любые эксплойты экономики.</li>
-        <li>Споры по сделкам рассматривает администрация.</li>
-      </ul>
-
-      <h2>Наказания</h2>
-      <ul>
-        <li>Предупреждение → мут → бан (по тяжести нарушения).</li>
-        <li>Читы и краш-эксплойты — бан без предупреждения.</li>
-        <li>Решение администрации можно оспорить в Discord, но не в игре.</li>
-      </ul>
+      <p class="appeal">
+        Решение администрации можно оспорить в Discord, но не в игре.
+      </p>
 
       <div class="note">
         ⚠️ Незнание правил не освобождает от ответственности. Заходя на сервер,
         вы соглашаетесь с этими правилами. Администрация оставляет за собой право
         обновлять их — актуальная версия всегда на этой странице.
       </div>
+
     </div>
   </main>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('serverIp');
+      const ip = '31.25.243.174:8542';
+      const textEl = btn.querySelector('.ip-text');
+      const iconEl = btn.querySelector('.ip-icon');
+      let timer = null;
+
+      async function copyIp() {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(ip);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = ip;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showCopied();
+        } catch (e) {
+          const range = document.createRange();
+          range.selectNodeContents(textEl);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+
+      function showCopied() {
+        btn.classList.add('copied');
+        iconEl.textContent = '✓';
+        textEl.textContent = 'Скопировано';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          iconEl.textContent = '📋';
+          textEl.textContent = ip;
+        }, 1600);
+      }
+
+      btn.addEventListener('click', copyIp);
+    })();
+  </script>
 </body>
 </html>
