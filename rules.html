@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Правила — Мгла</title>
+  <link rel="icon" type="image/x-icon" href="111222.ico">
   <style>
     * {
       margin: 0;
@@ -58,21 +59,18 @@
       outline-offset: 4px;
     }
 
-    .brand-link:hover .brand { filter: brightness(1.15); }
-
-    .brand {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff, #9fb6dd);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      transition: filter 0.2s;
+    .brand-logo {
+      display: block;
+      height: 48px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      transition: filter 0.2s, opacity 0.2s;
     }
 
-    .brand-link:hover .brand-sub { color: #9fb6dd; }
+    .brand-link:hover .brand-logo {
+      filter: brightness(1.15);
+    }
 
     .brand-sub {
       display: block;
@@ -80,9 +78,14 @@
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: #6f7f99;
-      margin-bottom: 6px;
+      margin-top: 8px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(160, 190, 255, 0.12);
       transition: color 0.2s;
     }
+
+    .brand-link:hover .brand-sub { color: #9fb6dd; }
 
     .server-ip {
       display: inline-flex;
@@ -246,7 +249,7 @@
       }
 
       .brand-link { margin: 0 12px 0 0; }
-      .brand { font-size: 18px; }
+      .brand-logo { height: 36px; }
       .brand-sub { display: none; }
 
       .server-ip {
@@ -276,8 +279,8 @@
 
   <aside class="sidebar">
     <a href="index.html" class="brand-link">
-      <span class="brand">Мгла</span>
-      <span class="brand-sub">RP-сервер Zomboid</span>
+      <img src="logo.png" alt="Мгла" class="brand-logo">
+      <span class="brand-sub">RP-сервер Project Zomboid</span>
     </a>
 
     <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
