@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Лор — Мгла</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #05070d;
+      color: #e8eef7;
+      min-height: 100vh;
+      display: flex;
+      position: relative;
+    }
+
+    /* ===== Фон ===== */
+    .sky {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(40, 60, 100, 0.35), transparent 60%),
+        radial-gradient(ellipse at 20% 100%, rgba(20, 30, 60, 0.4), transparent 55%),
+        #05070d;
+      z-index: 0;
+    }
+
+    /* ===== Левое меню ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 240px;
+      z-index: 2;
+      padding: 32px 20px;
+      background: rgba(8, 11, 20, 0.75);
+      border-right: 1px solid rgba(160, 190, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+
+    .brand-link {
+      display: block;
+      text-decoration: none;
+      margin-bottom: 4px;
+      border-radius: 10px;
+      outline-offset: 4px;
+    }
+
+    .brand-link:hover .brand { filter: brightness(1.15); }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff, #9fb6dd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: filter 0.2s;
+    }
+
+    .brand-link:hover .brand-sub { color: #9fb6dd; }
+
+    .brand-sub {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6f7f99;
+      margin-bottom: 6px;
+      transition: color 0.2s;
+    }
+
+    /* ===== IP-адрес ===== */
+    .server-ip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      margin: 0 0 22px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      background: rgba(140, 170, 255, 0.07);
+      border: 1px solid rgba(160, 190, 255, 0.22);
+      color: #dbe6f8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      user-select: all;
+    }
+
+    .server-ip:hover {
+      background: rgba(140, 170, 255, 0.16);
+      border-color: rgba(180, 205, 255, 0.45);
+    }
+
+    .server-ip .ip-icon { font-size: 12px; opacity: 0.8; flex-shrink: 0; }
+
+    .server-ip.copied {
+      background: rgba(120, 220, 160, 0.14);
+      border-color: rgba(120, 220, 160, 0.5);
+      color: #c8f5db;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: #b8c6dc;
+      text-decoration: none;
+      font-size: 15px;
+      border: 1px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .nav-link:hover { background: rgba(140, 170, 255, 0.1); color: #e8eef7; }
+
+    .nav-link.active {
+      background: rgba(140, 170, 255, 0.14);
+      border-color: rgba(160, 190, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .nav-divider { height: 1px; background: rgba(160, 190, 255, 0.12); margin: 12px 0; }
+
+    .nav-link.external { display: flex; align-items: center; gap: 10px; }
+
+    .nav-link.external .icon {
+      font-size: 15px;
+      line-height: 1;
+      flex-shrink: 0;
+      opacity: 0.9;
+    }
+
+    .nav-link.external.discord:hover {
+      background: rgba(88, 101, 242, 0.18);
+      border-color: rgba(120, 130, 255, 0.45);
+      color: #eef0ff;
+    }
+
+    /* ===== Правое окно ===== */
+    .main {
+      position: relative;
+      z-index: 1;
+      margin-left: 240px;
+      width: calc(100% - 240px);
+      min-height: 100vh;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .content-window {
+      width: 100%;
+      max-width: 100%;
+      min-height: calc(100vh - 80px);
+      background: rgba(10, 14, 24, 0.55);
+      border: 1px solid rgba(160, 190, 255, 0.18);
+      border-radius: 20px;
+      padding: 48px 40px;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 24px 60px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(90, 130, 220, 0.12);
+    }
+
+    /* ===== Типографика ===== */
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #dbe6f8;
+      margin: 34px 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(160, 190, 255, 0.14);
+    }
+
+    h2:first-of-type { margin-top: 0; }
+
+    .desc {
+      font-size: 15.5px;
+      line-height: 1.75;
+      color: #b8c6dc;
+      margin-bottom: 16px;
+    }
+
+    .desc:last-child { margin-bottom: 0; }
+
+    .desc strong { color: #dbe6f8; font-weight: 600; }
+
+    /* ===== Мобильная версия ===== */
+    @media (max-width: 760px) {
+      body { flex-direction: column; }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 16px;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 1px solid rgba(160, 190, 255, 0.12);
+        overflow-y: visible;
+      }
+
+      .brand-link { margin: 0 12px 0 0; }
+      .brand { font-size: 18px; }
+      .brand-sub { display: none; }
+
+      .server-ip {
+        margin: 0;
+        order: 10;
+        flex-basis: 100%;
+        justify-content: center;
+      }
+
+      .nav-link { padding: 8px 12px; font-size: 14px; }
+
+      .nav-divider { width: 1px; height: 24px; margin: 0 4px; }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 24px 16px;
+        min-height: auto;
+      }
+
+      .content-window { padding: 32px 22px; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky"></div>
+
+  <!-- ===== Левое меню ===== -->
+  <aside class="sidebar">
+    <a href="index.html" class="brand-link">
+      <span class="brand">Мгла</span>
+      <span class="brand-sub">RP-сервер Zomboid</span>
+    </a>
+
+    <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
+      <span class="ip-icon">📋</span>
+      <span class="ip-text">31.25.243.174:8542</span>
+    </button>
+
+    <a href="index.html"  class="nav-link">Главная</a>
+    <a href="lor.html"    class="nav-link active">Лор</a>
+    <a href="rules.html"  class="nav-link">Правила</a>
+    <a href="guides.html" class="nav-link">Гайды</a>
+
+    <div class="nav-divider"></div>
+
+    <a href="https://wargm.ru/" target="_blank" rel="noopener" class="nav-link external">
+      <span class="icon">🌐</span>
+      <span>wargm.ru</span>
+    </a>
+    <a href="https://discord.com/" target="_blank" rel="noopener" class="nav-link external discord">
+      <span class="icon">💬</span>
+      <span>Discord</span>
+    </a>
+  </aside>
+
+  <!-- ===== Правое окно ===== -->
+  <main class="main">
+    <div class="content-window">
+      <h2>1993. Конец старого мира</h2>
+      <p class="desc">
+        В июле 1993 года в округе Нокс, штат Кентукки, произошла вспышка неизвестного
+        вируса. Симптомы были чудовищными: агрессия, потеря рассудка, некроз тканей —
+        и смерть, за которой следовало возвращение. Люди начали превращаться в зомби.
+        Армия и полиция не справились. Правительство США, осознав масштаб катастрофы,
+        приняло отчаянное решение — нанести ядерный удар по округу Нокс, чтобы
+        остановить распространение заразы.
+      </p>
+      <p class="desc">
+        Боеголовки должны были стереть Нокс с лица земли. Но произошло невозможное:
+        ни одна из них не попала в Луисвилль. Город выжил. Чудом? Случайностью? Или
+        чем-то большим? Никто не знает. Но именно этот день — день, когда небо над
+        Луисвиллем не вспыхнуло — стал точкой отсчёта новой эры.
+      </p>
+
+      <h2>1993–2003. Десять лет тьмы</h2>
+      <p class="desc">
+        Удар по Ноксу не остановил заражение — он запустил цепную реакцию. В России
+        сработала система <strong>«Мёртвая рука»</strong> — автоматический ответный
+        ядерный удар, запрограммированный на случай потери связи с командованием.
+        Мир, который мы знали, погиб в огне.
+      </p>
+      <p class="desc">
+        Но настоящая смерть пришла позже — с неба. Ядерная зима окутала планету.
+        Десять лет мир не видел солнца. Тёмные тучи закрыли небо, температура упала,
+        климат изменился необратимо. <strong>Вечная метель</strong>, снег, мороз —
+        теперь это не аномалия, а норма. Днём — серый сумрак, ночью — абсолютная тьма.
+        Внешнего мира больше нет. По крайней мере, так кажется.
+      </p>
+      <p class="desc">
+        Связи нет. Радио молчит. Горизонт скрыт в снежной дымке. Ходят слухи, что
+        где-то есть выжившие, что где-то сохранились убежища, что правительство США
+        укрылось в бункерах. Но это только слухи. <strong>Луисвилль</strong> —
+        единственное, что осталось.
+      </p>
+
+      <h2>Луисвилль. Высотка</h2>
+      <p class="desc">
+        Город выжил, но стал другим. Улицы занесены снегом, здания разрушены,
+        инфраструктура мертва. Электричества нет. Воды нет. Тепла нет. Но есть
+        <strong>Высотка</strong> — единственный оплот цивилизации в этом ледяном аду.
+        Здесь ещё теплится жизнь: люди жмутся друг к другу, торгуют, воюют, пытаются
+        выжить. Высотка — это не просто здание. Это символ. Последняя точка на карте,
+        где ещё помнят, что такое человечество.
+      </p>
+      <p class="desc">
+        Но за стенами Высотки — хаос. Город кишит <strong>бегунами</strong> —
+        заражёнными, которые мутировали за десять лет. Они быстрые, агрессивные,
+        они не боятся холода. Есть и <strong>мутанты</strong> — твари, которые
+        когда-то были людьми, а теперь стали чем-то большим. Они не просто убивают —
+        они охотятся.
+      </p>
+      <p class="desc">
+        И есть <strong>радиация</strong>. Ядерный удар не прошёл бесследно. Некоторые
+        районы Луисвилля заражены. Радиация убивает медленно, но верно. Зато в этих
+        зонах можно найти то, что не найти больше нигде: довоенные технологии, оружие,
+        медикаменты. Рискнуть жизнью ради шанса выжить — это философия нового мира.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const btn = document.getElementById('serverIp');
+      const ip = '31.25.243.174:8542';
+      const textEl = btn.querySelector('.ip-text');
+      const iconEl = btn.querySelector('.ip-icon');
+      let timer = null;
+
+      async function copyIp() {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(ip);
+          } else {
+            const ta = document.createElement('textarea');
+            ta.value = ip;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          showCopied();
+        } catch (e) {
+          const range = document.createRange();
+          range.selectNodeContents(textEl);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+
+      function showCopied() {
+        btn.classList.add('copied');
+        iconEl.textContent = '✓';
+        textEl.textContent = 'Скопировано';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          iconEl.textContent = '📋';
+          textEl.textContent = ip;
+        }, 1600);
+      }
+
+      btn.addEventListener('click', copyClick);
+      function copyClick() { copyIp(); }
+    })();
+  </script>
+</body>
+</html>
