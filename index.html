@@ -52,7 +52,6 @@
       overflow-y: auto;
     }
 
-    /* Кликабельный бренд */
     .brand-link {
       display: block;
       text-decoration: none;
@@ -61,9 +60,7 @@
       outline-offset: 4px;
     }
 
-    .brand-link:hover .brand {
-      filter: brightness(1.15);
-    }
+    .brand-link:hover .brand { filter: brightness(1.15); }
 
     .brand {
       font-size: 22px;
@@ -77,9 +74,7 @@
       transition: filter 0.2s;
     }
 
-    .brand-link:hover .brand-sub {
-      color: #9fb6dd;
-    }
+    .brand-link:hover .brand-sub { color: #9fb6dd; }
 
     .brand-sub {
       display: block;
@@ -116,11 +111,7 @@
       border-color: rgba(180, 205, 255, 0.45);
     }
 
-    .server-ip .ip-icon {
-      font-size: 12px;
-      opacity: 0.8;
-      flex-shrink: 0;
-    }
+    .server-ip .ip-icon { font-size: 12px; opacity: 0.8; flex-shrink: 0; }
 
     .server-ip.copied {
       background: rgba(120, 220, 160, 0.14);
@@ -139,10 +130,7 @@
       transition: background 0.2s, color 0.2s, border-color 0.2s;
     }
 
-    .nav-link:hover {
-      background: rgba(140, 170, 255, 0.1);
-      color: #e8eef7;
-    }
+    .nav-link:hover { background: rgba(140, 170, 255, 0.1); color: #e8eef7; }
 
     .nav-link.active {
       background: rgba(140, 170, 255, 0.14);
@@ -150,17 +138,9 @@
       color: #ffffff;
     }
 
-    .nav-divider {
-      height: 1px;
-      background: rgba(160, 190, 255, 0.12);
-      margin: 12px 0;
-    }
+    .nav-divider { height: 1px; background: rgba(160, 190, 255, 0.12); margin: 12px 0; }
 
-    .nav-link.external {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .nav-link.external { display: flex; align-items: center; gap: 10px; }
 
     .nav-link.external .icon {
       font-size: 15px;
@@ -205,12 +185,29 @@
     /* ===== Типографика ===== */
     .desc {
       font-size: 15.5px;
-      line-height: 1.7;
+      line-height: 1.75;
       color: #b8c6dc;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .desc:last-child { margin-bottom: 0; }
+
+    .desc strong { color: #dbe6f8; font-weight: 600; }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #dbe6f8;
+      margin: 34px 0 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(160, 190, 255, 0.14);
+    }
+
+    .lore-divider {
+      height: 1px;
+      background: rgba(160, 190, 255, 0.14);
+      margin: 36px 0 4px;
+    }
 
     /* ===== Мобильная версия ===== */
     @media (max-width: 760px) {
@@ -242,11 +239,7 @@
 
       .nav-link { padding: 8px 12px; font-size: 14px; }
 
-      .nav-divider {
-        width: 1px;
-        height: 24px;
-        margin: 0 4px;
-      }
+      .nav-divider { width: 1px; height: 24px; margin: 0 4px; }
 
       .main {
         margin-left: 0;
@@ -255,10 +248,7 @@
         min-height: auto;
       }
 
-      .content-window {
-        padding: 32px 22px;
-        min-height: auto;
-      }
+      .content-window { padding: 32px 22px; min-height: auto; }
     }
   </style>
 </head>
@@ -272,16 +262,13 @@
       <span class="brand-sub">RP-сервер Zomboid</span>
     </a>
 
-    <!-- IP-адрес: клик — копирование -->
     <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
       <span class="ip-icon">📋</span>
       <span class="ip-text">31.25.243.174:8542</span>
     </button>
 
     <a href="index.html"  class="nav-link active">Главная</a>
-    <a href="lor.html"    class="nav-link">Лор</a>
     <a href="rules.html"  class="nav-link">Правила</a>
-    <a href="guides.html" class="nav-link">Гайды</a>
 
     <div class="nav-divider"></div>
 
@@ -289,7 +276,7 @@
       <span class="icon">🌐</span>
       <span>wargm.ru</span>
     </a>
-    <a href="https://discord.com/" target="_blank" rel="noopener" class="nav-link external discord">
+    <a href="https://discord.gg/xNvW2KGw7" target="_blank" rel="noopener" class="nav-link external discord">
       <span class="icon">💬</span>
       <span>Discord</span>
     </a>
@@ -298,6 +285,8 @@
   <!-- ===== Правое окно ===== -->
   <main class="main">
     <div class="content-window">
+
+      <!-- Краткое описание -->
       <p class="desc">
         <strong>«Мгла»</strong> — это РП-сервер по Project Zomboid с элементами PvP,
         где мир погружён в вечную метель. Солнце здесь не встаёт: вокруг только ночь,
@@ -314,6 +303,70 @@
         Карта ограничена <strong>Луисвиллем</strong> — выбраться за его пределы нельзя.
         Город стал и домом, и ловушкой.
       </p>
+
+      <!-- Лор -->
+      <div class="lore-divider"></div>
+
+      <h2>1993. Конец старого мира</h2>
+      <p class="desc">
+        В июле 1993 года в округе Нокс, штат Кентукки, произошла вспышка неизвестного
+        вируса. Симптомы были чудовищными: агрессия, потеря рассудка, некроз тканей —
+        и смерть, за которой следовало возвращение. Люди начали превращаться в зомби.
+        Армия и полиция не справились. Правительство США, осознав масштаб катастрофы,
+        приняло отчаянное решение — нанести ядерный удар по округу Нокс, чтобы
+        остановить распространение заразы.
+      </p>
+      <p class="desc">
+        Боеголовки должны были стереть Нокс с лица земли. Но произошло невозможное:
+        ни одна из них не попала в Луисвилль. Город выжил. Чудом? Случайностью? Или
+        чем-то большим? Никто не знает. Но именно этот день — день, когда небо над
+        Луисвиллем не вспыхнуло — стал точкой отсчёта новой эры.
+      </p>
+
+      <h2>1993–2003. Десять лет тьмы</h2>
+      <p class="desc">
+        Удар по Ноксу не остановил заражение — он запустил цепную реакцию. В России
+        сработала система <strong>«Мёртвая рука»</strong> — автоматический ответный
+        ядерный удар, запрограммированный на случай потери связи с командованием.
+        Мир, который мы знали, погиб в огне.
+      </p>
+      <p class="desc">
+        Но настоящая смерть пришла позже — с неба. Ядерная зима окутала планету.
+        Десять лет мир не видел солнца. Тёмные тучи закрыли небо, температура упала,
+        климат изменился необратимо. <strong>Вечная метель</strong>, снег, мороз —
+        теперь это не аномалия, а норма. Днём — серый сумрак, ночью — абсолютная тьма.
+        Внешнего мира больше нет. По крайней мере, так кажется.
+      </p>
+      <p class="desc">
+        Связи нет. Радио молчит. Горизонт скрыт в снежной дымке. Ходят слухи, что
+        где-то есть выжившие, что где-то сохранились убежища, что правительство США
+        укрылось в бункерах. Но это только слухи. <strong>Луисвилль</strong> —
+        единственное, что осталось.
+      </p>
+
+      <h2>Луисвилль. Высотка</h2>
+      <p class="desc">
+        Город выжил, но стал другим. Улицы занесены снегом, здания разрушены,
+        инфраструктура мертва. Электричества нет. Воды нет. Тепла нет. Но есть
+        <strong>Высотка</strong> — единственный оплот цивилизации в этом ледяном аду.
+        Здесь ещё теплится жизнь: люди жмутся друг к другу, торгуют, воюют, пытаются
+        выжить. Высотка — это не просто здание. Это символ. Последняя точка на карте,
+        где ещё помнят, что такое человечество.
+      </p>
+      <p class="desc">
+        Но за стенами Высотки — хаос. Город кишит <strong>бегунами</strong> —
+        заражёнными, которые мутировали за десять лет. Они быстрые, агрессивные,
+        они не боятся холода. Есть и <strong>мутанты</strong> — твари, которые
+        когда-то были людьми, а теперь стали чем-то большим. Они не просто убивают —
+        они охотятся.
+      </p>
+      <p class="desc">
+        И есть <strong>радиация</strong>. Ядерный удар не прошёл бесследно. Некоторые
+        районы Луисвилля заражены. Радиация убивает медленно, но верно. Зато в этих
+        зонах можно найти то, что не найти больше нигде: довоенные технологии, оружие,
+        медикаменты. Рискнуть жизнью ради шанса выжить — это философия нового мира.
+      </p>
+
     </div>
   </main>
 
@@ -330,7 +383,6 @@
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(ip);
           } else {
-            // Запасной путь для http/старых браузеров
             const ta = document.createElement('textarea');
             ta.value = ip;
             ta.style.position = 'fixed';
@@ -342,7 +394,6 @@
           }
           showCopied();
         } catch (e) {
-          // Если копирование не удалось — хотя бы выделим текст
           const range = document.createRange();
           range.selectNodeContents(textEl);
           const sel = window.getSelection();
