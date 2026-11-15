@@ -19,11 +19,12 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #05070d;
       color: #e8eef7;
-      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
       position: relative;
     }
 
-    /* ===== Фон: градиент ночного неба ===== */
+    /* ===== Фон ===== */
     .sky {
       position: fixed;
       inset: 0;
@@ -34,131 +35,113 @@
       z-index: 0;
     }
 
-    /* ===== Слои снега ===== */
-    .snow-layer {
+    /* ===== Боковая панель ===== */
+    .sidebar {
       position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .snow-layer.back {
-      z-index: 1;
-      opacity: 0.55;
-      filter: blur(1px);
-    }
-
-    .snow-layer.front {
-      z-index: 3;
-      opacity: 0.9;
-    }
-
-    .snowflake {
-      position: absolute;
-      top: -10vh;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
-      animation-name: fall;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      will-change: transform;
-    }
-
-    @keyframes fall {
-      0%   { transform: translate3d(0, -10vh, 0); }
-      100% { transform: translate3d(var(--drift), 110vh, 0); }
-    }
-
-    /* ===== Порывы ветра ===== */
-    .wind {
-      position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 240px;
       z-index: 2;
-      pointer-events: none;
-      overflow: hidden;
+      padding: 32px 20px;
+      background: rgba(8, 11, 20, 0.75);
+      border-right: 1px solid rgba(160, 190, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .gust {
-      position: absolute;
-      height: 2px;
-      width: 40%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(200, 220, 255, 0.25),
-        rgba(255, 255, 255, 0.55),
-        rgba(200, 220, 255, 0.25),
-        transparent
-      );
-      filter: blur(1px);
-      opacity: 0;
-      animation-name: gust;
-      animation-timing-function: ease-in-out;
-      animation-iteration-count: infinite;
+    .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      background: linear-gradient(180deg, #ffffff, #9fb6dd);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    @keyframes gust {
-      0%   { transform: translateX(-60vw) translateY(0);    opacity: 0; }
-      10%  { opacity: 0.8; }
-      50%  { opacity: 0.5; transform: translateX(60vw) translateY(-10px); }
-      90%  { opacity: 0.2; }
-      100% { transform: translateX(120vw) translateY(-20px); opacity: 0; }
+    .brand-sub {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6f7f99;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(160, 190, 255, 0.12);
     }
 
-    /* ===== Контент ===== */
-    .content {
+    .nav-link {
+      display: block;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: #b8c6dc;
+      text-decoration: none;
+      font-size: 15px;
+      border: 1px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .nav-link:hover {
+      background: rgba(140, 170, 255, 0.1);
+      color: #e8eef7;
+    }
+
+    .nav-link.active,
+    .nav-link[aria-current="page"] {
+      background: rgba(140, 170, 255, 0.14);
+      border-color: rgba(160, 190, 255, 0.25);
+      color: #ffffff;
+    }
+
+    /* ===== Основная область ===== */
+    .main {
       position: relative;
-      z-index: 4;
+      z-index: 1;
+      margin-left: 240px;
+      width: 100%;
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      padding: 24px;
+      padding: 48px 24px;
     }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 620px;
+    }
+
+    /* Показываем страницу, на которую кликнули (или главную по умолчанию) */
+    .page:target {
+      display: block;
+    }
+
+    /* Если ни один якорь не выбран — показываем главную */
+    #home { display: block; }
+    body:has(.page:target) #home { display: none; }
 
     .card {
       background: rgba(10, 14, 24, 0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(160, 190, 255, 0.18);
       border-radius: 20px;
       padding: 48px 40px;
-      max-width: 560px;
       width: 100%;
-      text-align: center;
+      text-align: left;
       box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.03) inset,
         0 24px 60px rgba(0, 0, 0, 0.6),
         0 0 80px rgba(90, 130, 220, 0.12);
-      animation: cardIn 0.9s ease-out both;
-    }
-
-    @keyframes cardIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .avatar {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(180, 210, 255, 0.35), rgba(40, 60, 110, 0.5));
-      border: 1px solid rgba(160, 190, 255, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin: 0 auto 24px;
-      box-shadow: 0 0 30px rgba(120, 160, 255, 0.25);
     }
 
     h1 {
-      font-size: 34px;
+      font-size: 30px;
       font-weight: 700;
       margin-bottom: 6px;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
       background: linear-gradient(180deg, #ffffff, #9fb6dd);
       -webkit-background-clip: text;
@@ -179,31 +162,44 @@
       line-height: 1.7;
       color: #b8c6dc;
       margin-bottom: 18px;
-      text-align: left;
     }
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-      margin: 22px 0 6px;
+    .desc:last-child { margin-bottom: 0; }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #dbe6f8;
+      margin: 26px 0 12px;
     }
 
-    .tag {
-      font-size: 12.5px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(140, 170, 255, 0.08);
-      border: 1px solid rgba(160, 190, 255, 0.22);
-      color: #c3d3ec;
-      white-space: nowrap;
+    h2:first-of-type { margin-top: 0; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+    }
+
+    li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 15.5px;
+      line-height: 1.7;
+      color: #b8c6dc;
+      margin-bottom: 8px;
+    }
+
+    li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #7f93b3;
     }
 
     .links {
       display: flex;
       gap: 12px;
-      justify-content: center;
       flex-wrap: wrap;
       margin-top: 28px;
     }
@@ -227,134 +223,182 @@
       box-shadow: 0 6px 20px rgba(100, 140, 230, 0.25);
     }
 
-    footer {
-      margin-top: 32px;
-      font-size: 13px;
-      color: #6f7f99;
-    }
+    /* ===== Мобильная версия ===== */
+    @media (max-width: 760px) {
+      body { flex-direction: column; }
 
-    @media (max-width: 480px) {
-      .card { padding: 36px 24px; }
-      h1 { font-size: 28px; }
-      .desc { font-size: 15px; }
-    }
+      .sidebar {
+        position: static;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 16px;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 1px solid rgba(160, 190, 255, 0.12);
+      }
 
-    @media (prefers-reduced-motion: reduce) {
-      .snowflake, .gust { animation: none !important; }
-      .snow-layer, .wind { display: none; }
-      .card { animation: none; }
+      .brand { margin: 0 12px 0 0; font-size: 18px; }
+      .brand-sub { display: none; }
+
+      .nav-link { padding: 8px 12px; font-size: 14px; }
+
+      .main { margin-left: 0; padding: 24px 16px; }
+      .card { padding: 32px 22px; }
+      h1 { font-size: 24px; }
     }
   </style>
 </head>
 <body>
   <div class="sky"></div>
 
-  <div class="snow-layer back" id="snowBack"></div>
-  <div class="wind" id="wind"></div>
-  <div class="snow-layer front" id="snowFront"></div>
+  <!-- ===== Левое меню ===== -->
+  <aside class="sidebar">
+    <div class="brand">Мгла</div>
+    <div class="brand-sub">RP-сервер Zomboid</div>
 
-  <main class="content">
-    <div class="card">
-      <div class="avatar">❄️</div>
-      <h1>Мгла</h1>
-      <div class="subtitle">RP-сервер Project Zomboid</div>
+    <a href="#home"   class="nav-link">Главная</a>
+    <a href="#lor"    class="nav-link">Лор</a>
+    <a href="#rules"  class="nav-link">Правила</a>
+    <a href="#guides" class="nav-link">Гайды</a>
+  </aside>
 
-      <p class="desc">
-        <strong>«Мгла»</strong> — это РП-сервер по Project Zomboid с элементами PvP,
-        где мир погружён в вечную метель. Солнце здесь не встаёт: вокруг только ночь,
-        стужа и бесконечный снег.
-      </p>
-      <p class="desc">
-        Вам предстоит выживать среди <strong>бегунов</strong> — быстрых и агрессивных
-        заражённых — и <strong>мутантов</strong>, встреча с которыми почти всегда
-        заканчивается плохо. Радиация отравляет воздух и землю, заставляя искать
-        убежище и защиту. А <strong>экономика</strong> сервера связывает выживших:
-        торговля, бартер и репутация значат не меньше, чем патроны.
-      </p>
-      <p class="desc">
-        Карта ограничена <strong>Луисвиллем</strong> — выбраться за его пределы нельзя.
-        Город стал и домом, и ловушкой.
-      </p>
+  <!-- ===== Контент ===== -->
+  <main class="main">
 
-      <div class="tags">
-        <span class="tag">RP</span>
-        <span class="tag">PvP</span>
-        <span class="tag">Вечная метель</span>
-        <span class="tag">Ночь</span>
-        <span class="tag">Бегуны</span>
-        <span class="tag">Мутанты</span>
-        <span class="tag">Радиация</span>
-        <span class="tag">Экономика</span>
-        <span class="tag">Только Луисвилль</span>
+    <!-- Главная (по умолчанию) -->
+    <section class="page" id="home">
+      <div class="card">
+        <h1>Мгла</h1>
+        <div class="subtitle">RP-сервер Project Zomboid</div>
+
+        <p class="desc">
+          <strong>«Мгла»</strong> — это РП-сервер по Project Zomboid с элементами PvP,
+          где мир погружён в вечную метель. Солнце здесь не встаёт: вокруг только ночь,
+          стужа и бесконечный снег.
+        </p>
+        <p class="desc">
+          Вам предстоит выживать среди <strong>бегунов</strong> — быстрых и агрессивных
+          заражённых — и <strong>мутантов</strong>, встреча с которыми почти всегда
+          заканчивается плохо. Радиация отравляет воздух и землю, заставляя искать
+          убежище и защиту. А <strong>экономика</strong> сервера связывает выживших:
+          торговля, бартер и репутация значат не меньше, чем патроны.
+        </p>
+        <p class="desc">
+          Карта ограничена <strong>Луисвиллем</strong> — выбраться за его пределы нельзя.
+          Город стал и домом, и ловушкой.
+        </p>
+
+        <div class="links">
+          <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:you@example.com">Связаться</a>
+        </div>
       </div>
+    </section>
 
-      <div class="links">
-        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:you@example.com">Связаться</a>
+    <!-- Лор -->
+    <section class="page" id="lor">
+      <div class="card">
+        <h1>Лор</h1>
+        <div class="subtitle">История мира «Мглы»</div>
+
+        <p class="desc">
+          Когда-то Луисвилль был обычным городом. Потом пришла зима, которая не
+          закончилась. Небо затянуло мглой, солнце исчезло, а снег пошёл и не
+          прекратился ни на день.
+        </p>
+        <p class="desc">
+          Вместе с метелью пришла зараза. Часть заражённых сохранила скорость —
+          их называют <strong>бегунами</strong>. Другие изменились сильнее: тела
+          обросли льдом и наростом, движения стали неестественными. Это
+          <strong>мутанты</strong> — встреча с ними почти всегда заканчивается плохо.
+        </p>
+        <p class="desc">
+          Радиация отравляет воздух и землю. Выжившие научились читать фон и
+          строить убежища, но безопасных мест почти не осталось. Экономика
+          связала уцелевших: торговля, бартер и репутация значат не меньше,
+          чем патроны.
+        </p>
+        <p class="desc">
+          Карта ограничена <strong>Луисвиллем</strong>. За его пределы нельзя
+          выбраться: мосты обрушены, дороги замело, а те, кто пытался уйти,
+          не вернулись. Город стал и домом, и ловушкой.
+        </p>
       </div>
+    </section>
 
-      <footer>© 2026 · Мгла · Сделано на GitHub Pages</footer>
-    </div>
+    <!-- Правила -->
+    <section class="page" id="rules">
+      <div class="card">
+        <h1>Правила</h1>
+        <div class="subtitle">Что можно и что нельзя</div>
+
+        <h2>Общее</h2>
+        <ul>
+          <li>Уважайте других игроков: без оскорблений, травли и токсичности.</li>
+          <li>РП превыше всего — играйте роль, а не «мета-гейте».</li>
+          <li>Запрещены читы, макросы и любое вмешательство в клиент.</li>
+          <li>Не используйте баги — сообщите о них администрации.</li>
+        </ul>
+
+        <h2>PvP</h2>
+        <ul>
+          <li>PvP разрешён, но только в рамках РП и с отыгрышем.</li>
+          <li>Без причины убивать нельзя — нужен повод и контекст.</li>
+          <li>Запрещён «спавн-килл» и убийство новичков без отыгрыша.</li>
+        </ul>
+
+        <h2>Радиация и метель</h2>
+        <ul>
+          <li>Не выходите в радиационные зоны без защиты — это ваша ответственность.</li>
+          <li>Укрытия от метели не «неуязвимы»: их можно потерять в РП.</li>
+        </ul>
+
+        <h2>Наказания</h2>
+        <ul>
+          <li>Предупреждение → мут → бан (по тяжести нарушения).</li>
+          <li>Читы и краш-эксплойты — бан без предупреждения.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Гайды -->
+    <section class="page" id="guides">
+      <div class="card">
+        <h1>Гайды</h1>
+        <div class="subtitle">Как выжить в «Мгле»</div>
+
+        <h2>Первые шаги</h2>
+        <ul>
+          <li>Найдите укрытие: подвал, гараж или укреплённый дом.</li>
+          <li>Соберите тёплую одежду — метель убивает быстрее, чем кажется.</li>
+          <li>Не выходите ночью без фонаря и оружия.</li>
+        </ul>
+
+        <h2>Бегуны и мутанты</h2>
+        <ul>
+          <li>Бегуны быстрые, но хрупкие — используйте ловушки и узкие проходы.</li>
+          <li>Мутантов лучше обходить: в лоб они почти не убиваются.</li>
+          <li>Шум привлекает и тех, и других — двигайтесь тихо.</li>
+        </ul>
+
+        <h2>Радиация</h2>
+        <ul>
+          <li>Следите за счётчиком Гейгера и не заходите в «красные» зоны.</li>
+          <li>Запас антирада и фильтров — обязателен.</li>
+          <li>После облучения — отдых, вода и антирад, иначе не выжить.</li>
+        </ul>
+
+        <h2>Экономика</h2>
+        <ul>
+          <li>Торгуйте с другими выжившими: бартер надёжнее денег.</li>
+          <li>Репутация открывает доступ к редким товарам и услугам.</li>
+          <li>Не берите кредиты у тех, кого не знаете.</li>
+        </ul>
+      </div>
+    </section>
+
   </main>
-
-  <script>
-    (function () {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) return;
-
-      function rand(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      function createSnow(container, count, opts) {
-        const frag = document.createDocumentFragment();
-        for (let i = 0; i < count; i++) {
-          const s = document.createElement('span');
-          s.className = 'snowflake';
-
-          const size = rand(opts.minSize, opts.maxSize);
-          const duration = rand(opts.minDur, opts.maxDur);
-          const delay = rand(0, duration);
-          const drift = rand(opts.minDrift, opts.maxDrift);
-
-          s.style.width = size + 'px';
-          s.style.height = size + 'px';
-          s.style.left = rand(0, 100) + 'vw';
-          s.style.opacity = rand(opts.minOpacity, opts.maxOpacity).toFixed(2);
-          s.style.animationDuration = duration + 's';
-          s.style.animationDelay = (-delay) + 's';
-          s.style.setProperty('--drift', drift + 'vw');
-
-          frag.appendChild(s);
-        }
-        container.appendChild(frag);
-      }
-
-      createSnow(document.getElementById('snowBack'), 70, {
-        minSize: 1, maxSize: 3,
-        minDur: 14, maxDur: 26,
-        minDrift: 6, maxDrift: 16,
-        minOpacity: 0.25, maxOpacity: 0.6
-      });
-
-      createSnow(document.getElementById('snowFront'), 40, {
-        minSize: 2, maxSize: 5,
-        minDur: 6, maxDur: 12,
-        minDrift: 12, maxDrift: 30,
-        minOpacity: 0.5, maxOpacity: 0.95
-      });
-
-      const wind = document.getElementById('wind');
-      for (let i = 0; i < 6; i++) {
-        const g = document.createElement('span');
-        g.className = 'gust';
-        g.style.top = rand(10, 90) + 'vh';
-        g.style.width = rand(25, 55) + 'vw';
-        g.style.animationDuration = rand(5, 11) + 's';
-        g.style.animationDelay = (-rand(0, 10)) + 's';
-        wind.appendChild(g);
-      }
-    })();
-  </script>
 </body>
 </html>
