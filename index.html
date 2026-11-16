@@ -53,19 +53,19 @@
       overflow-y: auto;
     }
 
-    /* Кликабельный логотип — на всю ширину меню */
+    /* Кликабельный логотип */
     .brand-link {
       display: block;
       text-decoration: none;
-      margin-bottom: 4px;
+      margin-bottom: 24px;
       border-radius: 10px;
       outline-offset: 4px;
     }
 
     .brand-logo {
       display: block;
-      width: 100%;          /* растягивается на всю ширину блока */
-      height: auto;         /* пропорции сохраняются */
+      width: 100%;
+      height: auto;
       object-fit: contain;
       transition: filter 0.2s, opacity 0.2s;
     }
@@ -73,21 +73,6 @@
     .brand-link:hover .brand-logo {
       filter: brightness(1.15);
     }
-
-    .brand-sub {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #6f7f99;
-      margin-top: 10px;
-      margin-bottom: 24px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(160, 190, 255, 0.12);
-      transition: color 0.2s;
-    }
-
-    .brand-link:hover .brand-sub { color: #9fb6dd; }
 
     /* ===== IP-адрес ===== */
     .server-ip {
@@ -224,8 +209,7 @@
       }
 
       .brand-link { margin: 0 12px 0 0; }
-      .brand-logo { width: 56px; }   /* на мобильных — компактно */
-      .brand-sub { display: none; }
+      .brand-logo { width: 56px; }
 
       .server-ip {
         margin: 0;
@@ -256,7 +240,6 @@
   <aside class="sidebar">
     <a href="index.html" class="brand-link">
       <img src="logo.png" alt="Мгла" class="brand-logo">
-      <span class="brand-sub">RP-сервер Zomboid</span>
     </a>
 
     <button type="button" class="server-ip" id="serverIp" title="Нажмите, чтобы скопировать">
@@ -269,7 +252,7 @@
 
     <div class="nav-divider"></div>
 
-    <a href="https://wargm.ru/" target="_blank" rel="noopener" class="nav-link external">
+    <a href="https://wargm.ru/server/83079" target="_blank" rel="noopener" class="nav-link external">
       <span class="icon">🌐</span>
       <span>wargm.ru</span>
     </a>
@@ -344,8 +327,8 @@
         Город выжил, но стал другим. Улицы занесены снегом, здания разрушены,
         инфраструктура мертва. Электричества нет. Воды нет. Тепла нет. Но есть
         <strong>Высотка</strong> — единственный оплот цивилизации в этом ледяном аду.
-        Здесь ещё теплится жизнь: люди живут, торгуют, греются и творят.
-        Высотка — это не просто здание. Это символ. Последняя точка на карте,
+        Здесь ещё теплится жизнь: люди жмутся друг к другу, торгуют, воюют, пытаются
+        выжить. Высотка — это не просто здание. Это символ. Последняя точка на карте,
         где ещё помнят, что такое человечество.
       </p>
       <p class="desc">
@@ -356,8 +339,9 @@
         они охотятся.
       </p>
       <p class="desc">
-        Ядерный удар не прошёл бесследно. Радиация убивает медленно, но верно. Чем дальше на Юг - тем быстрее.
-        Зато на Юге можно найти то, что не найти больше нигде: довоенные технологии, оружие,
+        И есть <strong>радиация</strong>. Ядерный удар не прошёл бесследно. Некоторые
+        районы Луисвилля заражены. Радиация убивает медленно, но верно. Зато в этих
+        зонах можно найти то, что не найти больше нигде: довоенные технологии, оружие,
         медикаменты. Рискнуть жизнью ради шанса выжить — это философия нового мира.
       </p>
 
